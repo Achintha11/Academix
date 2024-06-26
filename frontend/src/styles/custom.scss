@@ -1,0 +1,142 @@
+
+$primary: #9b77d7;
+$secondary : #0f133f;
+
+
+
+
+
+@import "node_modules/bootstrap/scss/bootstrap";
+
+
+// Set navbar background to transparent
+.navbar {
+    background: transparent;
+}
+
+// Set the body to have the gradient background
+body {
+    background: linear-gradient(135deg,$primary,$secondary);
+    color: white; 
+}
+
+.custom-btn{
+    color: white;
+    font-weight: 500;
+    
+}
+
+.custom-nav-btn {
+    background: white;
+    color: $primary;
+    font-weight: bold;
+}
+
+
+.custom-round{
+
+    border-radius: 0.75rem;
+}
+
+.custom-round-left{
+    border-top-left-radius: 0.75rem;
+    border-bottom-left-radius: 0.75rem;
+}
+
+.custom-round-right{
+    border-top-right-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
+
+}
+
+
+.custom-text-color {
+    color: rgb(112, 112, 112);
+}
+
+.bg-g{
+    background: #f5f5f5;
+}
+
+
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon .icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.input-with-icon .form-control {
+    padding-left: 35px;
+}
+
+.input-with-icon .form-control::placeholder {
+    font-size: 14px;
+    /* Adjust the font size as needed */
+    color: #aaa;
+    /* Optional: Adjust the placeholder text color */
+}
+
+
+.btn-orange{
+    background: #F76B1C;
+    border-radius: 2rem;
+    font-weight: 500;
+    color: white;
+    font-size: 15px;
+
+}
+
+
+.btn-border {
+    border-radius: 2rem;
+    font-weight: 300;
+    color: white;
+    font-size: 15px;
+    border-color: #F76B1C;
+
+}
+
+
+
+
+.text-gray{
+    color: #cccccc;
+}
+
+.text-orange{
+    color: #F76B1C;
+}
+
+.text-dark-gray{
+    color: gray;
+}
+
+
+.bg-gray{
+    background-color: #f5f5f5;
+}
+
+
+.text-green{
+    color: rgb(21, 233, 21);
+}
+
+.text-blue{
+    color: rgb(255, 48, 48);
+}
+
+.text-pink{
+    color: rgb(90, 190, 179);
+}
+
+
+
+
+
