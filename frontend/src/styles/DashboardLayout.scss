@@ -1,0 +1,23 @@
+/* src/styles/DashboardLayout.scss */
+/* src/styles/DashboardLayout.scss */
+
+.dashboard-layout {
+  .main-content {
+    transition: margin-left 0.3s ease;
+  }
+
+
+
+  &.sidebar-closed .main-content {
+    margin-left: 0;
+  }
+
+  @media (max-width: 767px) {
+    &.sidebar-open .main-content {
+      margin-left: 0;
+    }
+  }
+}
+
+
+
