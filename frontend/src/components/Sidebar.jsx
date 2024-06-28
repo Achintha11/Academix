@@ -35,7 +35,7 @@ function Sidebar({ isOpen, setIsOpen }) {
       <Nav className="flex-column">
         <Nav.Link
           as={NavLink}
-          exact // Ensure exact prop is set to true for the Home link
+          exact={true}
           to="/dashboard/home"
           className="sidebar-link"
           activeClassName="active"

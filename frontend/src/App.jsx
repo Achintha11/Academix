@@ -23,7 +23,7 @@ function Main() {
     <>
       {!hideNavAndFooter && <Navbar />}
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route exact path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/signIn" element={<SignInPage />} />
         <Route path="/signUp" element={<SignUpPage />} />

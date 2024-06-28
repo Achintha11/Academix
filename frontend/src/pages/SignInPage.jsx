@@ -1,6 +1,37 @@
 import "@fortawesome/fontawesome-free/css/all.min.css"; // Make sure FontAwesome is imported
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 const SignInPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/auth/login",
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true, // Send cookies with cross-origin requests
+        }
+      );
+
+      if (response.status === 200) {
+        navigate("/dashboard/home");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <main>
       <div className="container bg-white text-dark custom-round shadow-lg">
@@ -17,6 +48,8 @@ const SignInPage = () => {
                   placeholder="example@email.com"
                   type="email"
                   className="form-control bg-g"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="mb-3 px-5 input-with-icon">
@@ -25,12 +58,15 @@ const SignInPage = () => {
                   placeholder="password"
                   type="password"
                   className="form-control bg-g"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
 
               <button
                 type="submit"
                 className="btn btn-primary btn-sm custom-btn px-4 "
+                onClick={handleSubmit}
               >
                 Sign In
               </button>
