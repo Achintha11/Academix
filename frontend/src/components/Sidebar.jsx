@@ -21,12 +21,15 @@ function Sidebar({ isOpen, setIsOpen }) {
         isOpen ? "open" : "closed"
       }`}
     >
-      <div className="d-flex align-items-center mb-3 mx-auto">
-        <h1 className="font-weight-bold text-dark-gray ">
+      <div className="d-flex align-items-center mb-3 mx-auto ">
+        <h1
+          style={{ letterSpacing: "3px" }}
+          className="font-weight-bold text-dark-gray my-auto "
+        >
           Academi<span className="text-orange">X</span>
         </h1>{" "}
         <button
-          className="btn btn-primary d-md-none ml-3 bg-white "
+          className="btn btn-primary d-md-none ml-3 bg-white border-0 my-auto text-gray"
           onClick={() => setIsOpen(false)}
         >
           <FaArrowLeft />
@@ -49,7 +52,7 @@ function Sidebar({ isOpen, setIsOpen }) {
         </Nav.Link>
         <Nav.Link
           as={NavLink}
-          to="/dashboard/analytics"
+          to="/dashboard/courses"
           className="sidebar-link"
           activeClassName="active"
         >
@@ -62,7 +65,7 @@ function Sidebar({ isOpen, setIsOpen }) {
         </Nav.Link>
         <Nav.Link
           as={NavLink}
-          to="/dashboard/profile"
+          to="/dashboard/teachers"
           className="sidebar-link"
           activeClassName="active"
         >
@@ -75,7 +78,7 @@ function Sidebar({ isOpen, setIsOpen }) {
         </Nav.Link>
         <Nav.Link
           as={NavLink}
-          to="/dashboard/settings"
+          to="/dashboard/students"
           className="sidebar-link"
           activeClassName="active"
         >
