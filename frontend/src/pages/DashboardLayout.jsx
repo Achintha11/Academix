@@ -1,15 +1,15 @@
 // src/pages/DashboardLayout.jsx
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import HomeDashboard from "./HomeDashboard";
-import Settings from "./Students";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import "../styles/DashboardLayout.scss";
 import Courses from "./Courses";
 import Teachers from "./Teachers";
 import Students from "./Students";
+import useAuth from "../hooks/useAuth";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(window.innerWidth >= 768);
@@ -42,12 +42,12 @@ const DashboardLayout = () => {
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className="d-flex flex-column flex-grow-1 border">
         <Header toggleSidebar={toggleSidebar} />
-        <div className="main-content flex-grow-1 p-3 border">
+        <div className="main-content flex-grow-1 p-3 border bg-gray">
           <Routes>
             <Route path="/home" element={<HomeDashboard />} />
-            <Route path="/analytics" element={<Courses />} />
-            <Route path="/profile" element={<Teachers />} />
-            <Route path="/settings" element={<Students />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/teachers" element={<Teachers />} />
+            <Route path="/students" element={<Students />} />
           </Routes>
         </div>
       </div>
