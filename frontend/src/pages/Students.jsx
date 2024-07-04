@@ -1,70 +1,56 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addStudent,
+  fetchStudents,
+  removeStudent,
+  setEmail,
+  setName,
+  setStudentId,
+} from "../../features/student/studentSlice";
 
 const Students = () => {
-  const [students, setStudents] = useState([]);
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [studentId, setStudentId] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const { name, email, studentId, students } = useSelector(
+    (store) => store.students
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        "http://192.168.1.5:3000/api/v1/students"
-      );
-      if (response.status === 200) {
-        setStudents(response.data);
-      }
-    };
-    fetchData();
-  }, [students]);
+    dispatch(fetchStudents());
+  }, [dispatch, students]);
 
-  const handleAddStudent = async (e) => {
+  const handleAddStudent = (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post(
-        "http://192.168.1.5:3000/api/v1/students",
-        {
-          email,
-          name,
-          studentId,
-        }
-      );
-
-      if (response.status === 200) {
-        alert("New Student Added");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(addStudent({ name, email, studentId }));
+    dispatch(setName(""));
+    dispatch(setEmail(""));
+    dispatch(setStudentId(""));
   };
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  };
+  // const handleSearch = (e) => {
+  //   setSearchQuery(e.target.value);
+  // };
 
-  const filteredStudents = students.filter(
-    (student) =>
-      student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      student.studentId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      student.email.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // const filteredStudents = students.filter(
+  //   (student) =>
+  //     student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     student.studentId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     student.email.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
 
-  const handleDeleteStudent = async (studentId) => {
-    try {
-      const response = await axios.delete(
-        `http://192.168.1.5:3000/api/v1/students/${studentId}`
-      );
-      if (response.status === 200) {
-        alert("deleted successfully");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleDeleteStudent = async (studentId) => {
+  //   try {
+  //     const response = await axios.delete(
+  //       `http://192.168.1.5:3000/api/v1/students/${studentId}`
+  //     );
+  //     if (response.status === 200) {
+  //       alert("deleted successfully");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div className="bg-white container text-dark h-100 p-3">
@@ -83,7 +69,7 @@ const Students = () => {
                 className="form-control"
                 placeholder="Student Name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => dispatch(setName(e.target.value))}
                 required
               />
             </div>
@@ -94,7 +80,7 @@ const Students = () => {
                 className="form-control"
                 placeholder="Student ID"
                 value={studentId}
-                onChange={(e) => setStudentId(e.target.value)}
+                onChange={(e) => dispatch(setStudentId(e.target.value))}
                 required
               />
             </div>
@@ -105,7 +91,7 @@ const Students = () => {
                 className="form-control"
                 placeholder="Student Email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => dispatch(setEmail(e.target.value))}
                 required
               />
             </div>
@@ -126,8 +112,8 @@ const Students = () => {
               type="text"
               className="form-control pl-5"
               placeholder="Search Students"
-              value={searchQuery}
-              onChange={handleSearch}
+              // value={searchQuery}
+              // onChange={handleSearch}
             />
           </div>
         </div>
@@ -145,21 +131,24 @@ const Students = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredStudents.map((student) => (
-                <tr key={student.studentId}>
-                  <td>{student.studentId}</td>
-                  <td>{student.name}</td>
-                  <td>{student.email}</td>
-                  <td>
-                    <button
-                      onClick={() => handleDeleteStudent(student.studentId)}
-                      className="btn btn-danger btn-sm"
-                    >
-                      remove
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {students.map((student) => {
+                const { studentId, name, email } = student;
+                return (
+                  <tr key={studentId}>
+                    <td>{studentId}</td>
+                    <td>{name}</td>
+                    <td>{email}</td>
+                    <td>
+                      <button
+                        onClick={() => dispatch(removeStudent(studentId))}
+                        className="btn btn-danger btn-sm"
+                      >
+                        remove
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

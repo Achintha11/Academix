@@ -1,62 +1,31 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchTeachers,
+  addTeacher,
+  setEmail,
+  setName,
+  setTeacherId,
+  removeTeacher,
+} from "../../features/teacher/teacherSlice";
 
 const Teachers = () => {
-  const [teachers, setTeachers] = useState([]);
-  const [email, setEmail] = useState("");
-  const [teacherId, setTeacherId] = useState("");
-  const [name, setName] = useState("");
+  const dispatch = useDispatch();
+  const { teachers, name, email, teacherId } = useSelector(
+    (store) => store.teachers
+  );
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://192.168.1.5:3000/api/v1/teachers"
-        );
-        if (response.status === 200) {
-          setTeachers(response.data);
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-
-    fetchData();
-  }, [teachers]);
+    dispatch(fetchTeachers());
+  }, [dispatch, teachers]); // Now useEffect will run again whenever dispatch changes
 
   const handleAddTeacher = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post(
-        "http://192.168.1.5:3000/api/v1/teachers",
-        {
-          email,
-          teacherId,
-          name,
-        }
-      );
-
-      if (response.status === 200) {
-        alert("teacher Added");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleDeleteTeacher = async (teacherId) => {
-    try {
-      const response = await axios.delete(
-        `http://192.168.1.5:3000/api/v1/teachers/${teacherId}`
-      );
-      if (response.status === 200) {
-        alert("deleted successfully");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(addTeacher({ email, name, teacherId }));
+    dispatch(setName(""));
+    dispatch(setEmail(""));
+    dispatch(setTeacherId(""));
   };
 
   return (
@@ -76,7 +45,7 @@ const Teachers = () => {
                 type="text"
                 placeholder="Teacher Name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => dispatch(setName(e.target.value))}
                 required
               />
             </div>
@@ -86,7 +55,7 @@ const Teachers = () => {
                 type="text"
                 placeholder="Teacher ID"
                 value={teacherId}
-                onChange={(e) => setTeacherId(e.target.value)}
+                onChange={(e) => dispatch(setTeacherId(e.target.value))}
                 required
               />
             </div>
@@ -97,7 +66,7 @@ const Teachers = () => {
                 placeholder="Teacher Email"
                 value={email}
                 required
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => dispatch(setEmail(e.target.value))}
               />
             </div>
             <button
@@ -133,21 +102,24 @@ const Teachers = () => {
               </tr>
             </thead>
             <tbody>
-              {teachers.map((teacher) => (
-                <tr key={teacher.teacherId}>
-                  <td>{teacher.teacherId}</td>
-                  <td>{teacher.name}</td>
-                  <td>{teacher.email}</td>
-                  <td>
-                    <button
-                      onClick={() => handleDeleteTeacher(teacher.teacherId)}
-                      className="btn btn-sm btn-danger"
-                    >
-                      remove
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {teachers.map((teacher) => {
+                const { name, email, teacherId } = teacher;
+                return (
+                  <tr key={teacherId}>
+                    <td>{teacherId}</td>
+                    <td>{name}</td>
+                    <td>{email}</td>
+                    <td>
+                      <button
+                        onClick={() => dispatch(removeTeacher(teacherId))}
+                        className="btn btn-sm btn-danger"
+                      >
+                        remove
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
