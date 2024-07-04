@@ -4,6 +4,7 @@ require("dotenv").config();
 const authRoutes = require("./routes/AuthRoute");
 const studentRoute = require("./routes/StudentRoute");
 const teacherRoute = require("./routes/TeacherRoute");
+const courseRoute = require("./routes/CourseRoute");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
@@ -19,6 +20,7 @@ app.use(
 app.use("/auth", authRoutes);
 app.use("/api/v1", studentRoute);
 app.use("/api/v1", teacherRoute);
+app.use("/api/v1", courseRoute);
 
 const port = 3000;
 mongoose.connect(process.env.db_uri).then(() => {

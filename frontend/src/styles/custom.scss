@@ -171,6 +171,20 @@ body {
 }
 
 
+//userCourseCard 
+
+.user-course-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid rgba(0, 0, 0, 0.125); /* Ensure a border is set for shadow to appear */
+  box-shadow: 0 .125rem .25rem rgba(black, .075);
+    /* Adjust shadow properties as needed */
+}
+
+.user-course-card:hover {
+  box-shadow: 0 .5rem 1rem rgba(black,.15); /* Adjust shadow properties as needed */
+}
+
+
 
 
 

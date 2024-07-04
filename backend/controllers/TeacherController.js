@@ -30,14 +30,18 @@ const addTeacher = async (req, res) => {
 const removeTeacher = async (req, res) => {
   const { teacherId } = req.params;
 
+  console.log(teacherId);
+
   try {
-    const teacher = await Teacher.findOneAndDelete(teacherId);
+    const teacher = await Teacher.findOneAndDelete({ teacherId });
     if (!teacher) {
       return res.status(404).json({ message: "Teacher not found" });
     }
 
     res.status(200).json({ message: "Teacher successfully deleted" });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = { getAllTeachers, addTeacher, removeTeacher };
