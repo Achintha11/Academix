@@ -1,4 +1,5 @@
 const Teacher = require("../models/Teacher");
+const { getTeacherWelcomeEmail } = require("../services/emailTemplates");
 
 const getAllTeachers = async (req, res) => {
   try {
@@ -20,6 +21,14 @@ const addTeacher = async (req, res) => {
       email,
       password: defaultPassword,
     });
+
+    const { subject, text } = getTeacherWelcomeEmail(
+      name,
+      teacherId,
+      email,
+      defaultPassword
+    );
+    sendEmail(email, subject, text);
 
     res.status(200).json({ teacher: teacher._id });
   } catch (error) {

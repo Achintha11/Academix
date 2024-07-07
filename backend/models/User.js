@@ -14,6 +14,14 @@ const userSchema = new mongoose.Schema({
     require: true,
     minLength: 6,
   },
+  role: {
+    type: String,
+    required: true,
+  },
+  userName: {
+    type: String,
+    required: true,
+  },
 });
 
 userSchema.pre("save", async function (next) {
@@ -31,7 +39,7 @@ userSchema.statics.login = async function (email, password) {
     }
     throw Error("incorrect password");
   }
-  throw Error("incorrect email");
+  return null;
 };
 
 const user = mongoose.model("user", userSchema);

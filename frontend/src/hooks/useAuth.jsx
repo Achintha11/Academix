@@ -1,25 +1,24 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// src/utils/auth.js
+
 import axios from "axios";
+import { clearUser, setUser } from "../../features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-const useAuth = () => {
-  const navigate = useNavigate();
+export const useAuth = async () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.auth);
+  try {
+    const response = await axios.get("http://192.168.1.5:3000/auth/check", {
+      withCredentials: true,
+    });
+    if (response.data.user) {
+      dispatch(setUser(response.data.user));
+    } else {
+      dispatch(clearUser());
+    }
+  } catch (error) {
+    dispatch(clearUser());
+  }
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await axios.get("http://localhost:3000/auth/check", {
-          withCredentials: true,
-        });
-      } catch (error) {
-        if (error.response.status === 401) {
-          navigate("/signIn");
-        }
-      }
-    };
-
-    checkAuth();
-  }, [navigate]);
+  console.log(user);
 };
-
-export default useAuth;

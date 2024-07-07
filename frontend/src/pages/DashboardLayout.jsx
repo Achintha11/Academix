@@ -1,7 +1,5 @@
-// src/pages/DashboardLayout.jsx
-
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import HomeDashboard from "./HomeDashboard";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
@@ -9,10 +7,25 @@ import "../styles/DashboardLayout.scss";
 import Courses from "./Courses";
 import Teachers from "./Teachers";
 import Students from "./Students";
-import useAuth from "../hooks/useAuth";
+import Announcements from "./Announcements";
+import { useDispatch, useSelector } from "react-redux";
+import { checkAuth } from "../../features/auth/authSlice";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(window.innerWidth >= 768);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(checkAuth())
+      .unwrap()
+      .catch((err) => {
+        console.log(err);
+        navigate("/signIn");
+      });
+  }, [dispatch, navigate]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -33,25 +46,60 @@ const DashboardLayout = () => {
     };
   }, []);
 
-  return (
-    <div
-      className={`dashboard-layout d-flex vh-100 ${
-        isOpen ? "sidebar-open" : "sidebar-closed "
-      }`}
-    >
-      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className="d-flex flex-column flex-grow-1 border">
-        <Header toggleSidebar={toggleSidebar} />
-        <div className="main-content flex-grow-1 p-3 border bg-gray">
-          <Routes>
+  const renderRoutes = () => {
+    if (!user) return null;
+    const role = "admin";
+
+    switch (role) {
+      case "admin":
+        return (
+          <>
             <Route path="/home" element={<HomeDashboard />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/teachers" element={<Teachers />} />
             <Route path="/students" element={<Students />} />
-          </Routes>
+            <Route path="/announcements" element={<Announcements />} />
+          </>
+        );
+      case "teacher":
+        return (
+          <>
+            <Route path="/home" element={<HomeDashboard />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/announcements" element={<Announcements />} />
+          </>
+        );
+      case "student":
+        return (
+          <>
+            <Route path="/home" element={<HomeDashboard />} />
+            <Route path="/my-courses" element={<Courses />} />
+            <Route path="/announcements" element={<Announcements />} />
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <>
+      {user && (
+        <div
+          className={`dashboard-layout d-flex vh-100 ${
+            isOpen ? "sidebar-open" : "sidebar-closed "
+          }`}
+        >
+          <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+          <div className="d-flex flex-column flex-grow-1 border">
+            <Header toggleSidebar={toggleSidebar} />
+            <div className="main-content flex-grow-1 p-3 border bg-gray">
+              <Routes>{renderRoutes()}</Routes>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
