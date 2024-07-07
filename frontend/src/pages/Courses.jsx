@@ -69,7 +69,7 @@ const Courses = () => {
             <input
               type="text"
               className="form-control pl-5"
-              placeholder="Search Teachers"
+              placeholder="Search Courses"
             />
           </div>
         </div>

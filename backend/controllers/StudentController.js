@@ -1,4 +1,6 @@
 const Student = require("../models/Student");
+const { getStudentWelcomeEmail } = require("../services/emailTemplates");
+const { sendEmail } = require("../services/nodeMailer");
 
 const getAllStudents = async (req, res) => {
   try {
@@ -12,13 +14,23 @@ const getAllStudents = async (req, res) => {
 const addStudent = async (req, res) => {
   const { name, studentId, email } = req.body;
   const defaultPassword = "password";
+  const role = "student";
   try {
     const student = await Student.create({
       name,
       studentId,
       email,
       password: defaultPassword,
+      role,
     });
+    const { subject, text } = getStudentWelcomeEmail(
+      name,
+      studentId,
+      email,
+      defaultPassword
+    );
+    sendEmail(email, subject, text);
+
     res.status(200).json({ student: student._id });
   } catch (error) {
     console.log(error);

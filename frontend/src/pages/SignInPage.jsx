@@ -1,35 +1,27 @@
-import "@fortawesome/fontawesome-free/css/all.min.css"; // Make sure FontAwesome is imported
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../features/auth/authSlice";
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/auth/login",
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true, // Send cookies with cross-origin requests
-        }
-      );
-
-      if (response.status === 200) {
+    dispatch(loginUser({ email, password }))
+      .unwrap()
+      .then(() => {
         navigate("/dashboard/home");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+      })
+      .catch((err) => {
+        console.error("Login failed:", err);
+      });
   };
 
   return (

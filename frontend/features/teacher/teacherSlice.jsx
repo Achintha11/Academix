@@ -84,8 +84,7 @@ const teachersSlice = createSlice({
     builder.addCase(addTeacher.pending, (state) => {
       state.status = "loading";
     });
-    builder.addCase(addTeacher.fulfilled, (state, action) => {
-      state.teachers.push(action.payload);
+    builder.addCase(addTeacher.fulfilled, (state) => {
       state.status = "succeeded";
     });
     builder.addCase(removeTeacher.pending, (state) => {
