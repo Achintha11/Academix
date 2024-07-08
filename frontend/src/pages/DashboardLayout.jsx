@@ -10,6 +10,7 @@ import Students from "./Students";
 import Announcements from "./Announcements";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "../../features/auth/authSlice";
+import Requests from "./Requests";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(window.innerWidth >= 768);
@@ -59,6 +60,7 @@ const DashboardLayout = () => {
             <Route path="/teachers" element={<Teachers />} />
             <Route path="/students" element={<Students />} />
             <Route path="/announcements" element={<Announcements />} />
+            <Route path="/requests" element={<Requests />} />
           </>
         );
       case "teacher":

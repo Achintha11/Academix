@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { FaBullhorn } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteAnnouncement } from "../../features/announcement/announcementSlice";
 
 const AnnouncementCard = ({
@@ -11,6 +11,7 @@ const AnnouncementCard = ({
   _id,
 }) => {
   const dispatch = useDispatch();
+  const { user } = useSelector((Store) => Store.auth);
   return (
     <div className="col-md-6 mb-4">
       <div className="card border user-course-card">
@@ -28,12 +29,14 @@ const AnnouncementCard = ({
               {new Date(announcementDate).toLocaleString()}
             </small>
           </div>
-          <button
-            className="btn btn-danger btn-sm "
-            onClick={() => dispatch(deleteAnnouncement(_id))}
-          >
-            <RiDeleteBin6Line style={{ fontSize: "1.2rem" }} />
-          </button>
+          {user.role === "admin" && (
+            <button
+              className="btn btn-danger btn-sm "
+              onClick={() => dispatch(deleteAnnouncement(_id))}
+            >
+              <RiDeleteBin6Line style={{ fontSize: "1.2rem" }} />
+            </button>
+          )}
         </div>
       </div>
     </div>

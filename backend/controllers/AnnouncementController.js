@@ -2,10 +2,23 @@ const Announcement = require("../models/Announcement");
 
 const getAllAnnouncements = async (req, res) => {
   try {
-    const announcements = await Announcement.find().sort({ createdAt: -1 });
-    res.status(200).json(announcements);
+    const role = req.headers.role; // Access role from headers
+    console.log(role);
+    if (role === "student") {
+      const announcements = await Announcement.find({
+        $or: [{ targetAudience: "students" }, { targetAudience: "all" }],
+      }).sort({
+        createdAt: -1,
+      });
+      res.status(200).json(announcements);
+    } else {
+      const announcements = await Announcement.find().sort({
+        createdAt: -1,
+      });
+      res.status(200).json(announcements);
+    }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "announcements sending failed" });
   }
 };
 
