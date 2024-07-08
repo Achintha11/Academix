@@ -10,7 +10,7 @@ const Announcements = () => {
 
   useEffect(() => {
     dispatch(getAllAnnouncements());
-  }, [dispatch, announcements]);
+  }, [dispatch]);
   return (
     <div className="container bg-white h-100 p-3">
       <div className="row">

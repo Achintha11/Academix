@@ -7,6 +7,7 @@ import {
   FaBullhorn,
   FaArrowLeft,
   FaSignOutAlt,
+  FaExclamationCircle,
 } from "react-icons/fa";
 import "../styles/Sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -78,6 +79,11 @@ function Sidebar({ isOpen, setIsOpen }) {
       to: "/dashboard/announcements",
       label: "Announcements",
       icon: <FaBullhorn className="me-2" />,
+    },
+    {
+      to: "/dashboard/requests",
+      label: "Requests",
+      icon: <FaExclamationCircle className="me-2" />,
     },
   ];
 

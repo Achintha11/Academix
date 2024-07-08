@@ -10,9 +10,16 @@ const initialState = {
 export const getAllAnnouncements = createAsyncThunk(
   "announcements/getAllAnnouncements",
   async (_, thunkAPI) => {
+    const role = thunkAPI.getState().auth.user.role;
     try {
       const response = await axios.get(
-        "http://192.168.1.5:3000/api/v1/announcements"
+        "http://192.168.1.5:3000/api/v1/announcements",
+        {
+          headers: {
+            Role: role,
+          },
+          withCredentials: true,
+        }
       );
       return response.data;
     } catch (error) {

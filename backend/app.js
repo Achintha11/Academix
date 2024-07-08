@@ -6,8 +6,10 @@ const studentRoute = require("./routes/StudentRoute");
 const teacherRoute = require("./routes/TeacherRoute");
 const courseRoute = require("./routes/CourseRoute");
 const announcementRoute = require("./routes/AnnouncementRoute");
+const enrollmentRequestRoute = require("./routes/EnrollmentRequestRoute");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const { checkUser } = require("./middleware/AuthMiddleware");
 
 const app = express();
 app.use(express.json());
@@ -23,6 +25,7 @@ app.use("/api/v1", studentRoute);
 app.use("/api/v1", teacherRoute);
 app.use("/api/v1", courseRoute);
 app.use("/api/v1", announcementRoute);
+app.use("/api/v1", enrollmentRequestRoute);
 
 const port = 3000;
 mongoose.connect(process.env.db_uri).then(() => {
