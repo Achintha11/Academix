@@ -1,16 +1,46 @@
 import { useDispatch, useSelector } from "react-redux";
 import { removeCourse } from "../../features/courses/courseSlice";
-import { requestEnrollment } from "../../features/enrollment/enrollmentSlice";
+import {
+  getEnrollmentRequests,
+  requestEnrollment,
+} from "../../features/enrollment/enrollmentSlice";
+import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import { showModal } from "../../features/courseDetailsModal/modalSlice";
 
 /* eslint-disable react/prop-types */
 const UserCourseCard = ({ courseId, courseName, _id }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.auth);
+  const { requests, status } = useSelector((store) => store.enrollments);
+  const location = useLocation();
+
+  let hasRequested;
+  let isApproved;
+  const handleShowModal = () => {
+    dispatch(showModal());
+  };
+
+  if (status === "success" && requests.length > 0) {
+    hasRequested = requests.some(
+      (request) =>
+        request.course.courseId === courseId && request.student._id === user._id
+    );
+
+    isApproved = requests.some(
+      (request) =>
+        request.course.courseId === courseId &&
+        request.student._id === user._id &&
+        request.status === "approved"
+    );
+  }
 
   const handleEnrollmentRequest = () => {
     const student = user._id;
     const course = _id;
-    dispatch(requestEnrollment({ student, course }));
+    dispatch(requestEnrollment({ student, course })).then(() => {
+      dispatch(getEnrollmentRequests());
+    });
   };
 
   return (
@@ -20,6 +50,7 @@ const UserCourseCard = ({ courseId, courseName, _id }) => {
         cursor: "pointer",
         transition: "transform 0.2s, box-shadow 0.2s",
       }}
+      onClick={handleShowModal}
     >
       <div className="card-body d-flex justify-content-between align-items-center">
         <div>
@@ -39,16 +70,24 @@ const UserCourseCard = ({ courseId, courseName, _id }) => {
           </div>
         )}
 
-        {user.role === "student" && (
-          <div style={{ pointerEvents: "auto" }}>
-            <button
-              onClick={handleEnrollmentRequest}
-              className="btn btn-success me-3 btn-normal"
-            >
-              Enroll{" "}
-            </button>
-          </div>
-        )}
+        {user.role === "student" &&
+          location.pathname !== "/dashboard/my-courses" && (
+            <div style={{ pointerEvents: "auto" }}>
+              {isApproved ? (
+                <span className="text-success">
+                  You are enrolled in this course
+                </span>
+              ) : (
+                <button
+                  onClick={handleEnrollmentRequest}
+                  className="btn btn-success me-3 btn-normal"
+                  disabled={hasRequested}
+                >
+                  {hasRequested ? "Requested" : "Enroll"}
+                </button>
+              )}
+            </div>
+          )}
       </div>
     </div>
   );

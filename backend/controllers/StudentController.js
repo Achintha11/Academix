@@ -1,6 +1,7 @@
 const Student = require("../models/Student");
 const { getStudentWelcomeEmail } = require("../services/emailTemplates");
 const { sendEmail } = require("../services/nodeMailer");
+const mongoose = require("mongoose");
 
 const getAllStudents = async (req, res) => {
   try {
@@ -53,4 +54,34 @@ const deleteStudent = async (req, res) => {
   }
 };
 
-module.exports = { getAllStudents, addStudent, deleteStudent };
+const getStudentCourses = async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    // Check if the provided studentId is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(studentId)) {
+      return res.status(400).json({ message: "Invalid student ID" });
+    }
+
+    const student = await Student.findById(studentId).populate(
+      "enrolledCourses"
+    );
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    console.log("Populated Courses:", student.enrolledCourses); // Debug log
+    res.status(200).json(student.enrolledCourses);
+  } catch (error) {
+    console.error("Error fetching student courses:", error); // Debug log
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+module.exports = {
+  getAllStudents,
+  addStudent,
+  deleteStudent,
+  getStudentCourses,
+};

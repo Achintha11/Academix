@@ -11,6 +11,7 @@ import Announcements from "./Announcements";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "../../features/auth/authSlice";
 import Requests from "./Requests";
+import MyCourses from "./MyCourses";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(window.innerWidth >= 768);
@@ -49,7 +50,7 @@ const DashboardLayout = () => {
 
   const renderRoutes = () => {
     if (!user) return null;
-    const role = "admin";
+    const role = user.role;
 
     switch (role) {
       case "admin":
@@ -75,7 +76,9 @@ const DashboardLayout = () => {
         return (
           <>
             <Route path="/home" element={<HomeDashboard />} />
-            <Route path="/my-courses" element={<Courses />} />
+            <Route path="/all-courses" element={<Courses />} />
+            <Route path="/my-courses" element={<MyCourses />} />
+
             <Route path="/announcements" element={<Announcements />} />
           </>
         );

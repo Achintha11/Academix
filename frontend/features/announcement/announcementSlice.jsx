@@ -13,7 +13,7 @@ export const getAllAnnouncements = createAsyncThunk(
     const role = thunkAPI.getState().auth.user.role;
     try {
       const response = await axios.get(
-        "http://192.168.1.5:3000/api/v1/announcements",
+        "http://localhost:3000/api/v1/announcements",
         {
           headers: {
             Role: role,
@@ -33,7 +33,7 @@ export const addAnnouncement = createAsyncThunk(
   async (announcement, thunkAPI) => {
     try {
       const response = await axios.post(
-        "http://192.168.1.5:3000/api/v1/announcements",
+        "http://localhost:3000/api/v1/announcements",
         announcement
       );
       thunkAPI.dispatch(setShowAlert(true));
@@ -49,7 +49,7 @@ export const deleteAnnouncement = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await axios.delete(
-        `http://192.168.1.5:3000/api/v1/announcements/${id}`
+        `http://localhost:3000/api/v1/announcements/${id}`
       );
       return response.data;
     } catch (error) {

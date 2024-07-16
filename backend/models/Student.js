@@ -25,6 +25,7 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "course" }],
 });
 
 studentSchema.pre("save", async function (next) {

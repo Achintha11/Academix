@@ -5,9 +5,7 @@ export const fetchStudents = createAsyncThunk(
   "students/fetchStudents",
   async () => {
     try {
-      const response = await axios.get(
-        "http://192.168.1.5:3000/api/v1/students"
-      );
+      const response = await axios.get("http://localhost:3000/api/v1/students");
       return response.data;
     } catch (error) {
       console.log(error);
@@ -20,7 +18,7 @@ export const addStudent = createAsyncThunk(
   async ({ name, studentId, email }) => {
     try {
       const response = await axios.post(
-        "http://192.168.1.5:3000/api/v1/students",
+        "http://localhost:3000/api/v1/students",
         {
           name,
           studentId,
@@ -39,7 +37,7 @@ export const removeStudent = createAsyncThunk(
   async (studentId) => {
     try {
       const response = await axios.delete(
-        `http://192.168.1.5:3000/api/v1/students/${studentId}`
+        `http://localhost:3000/api/v1/students/${studentId}`
       );
       return response;
     } catch (error) {
@@ -47,11 +45,21 @@ export const removeStudent = createAsyncThunk(
     }
   }
 );
+export const fetchStudentCourses = createAsyncThunk(
+  "studentCourses/fetchStudentCourses",
+  async (studentId) => {
+    const response = await axios.get(
+      `http://localhost:3000/api/v1/students/${studentId}/courses`
+    );
+    return response.data;
+  }
+);
 
 const studentSlice = createSlice({
   name: "students",
   initialState: {
     students: [],
+    courses: [],
     name: "",
     email: "",
     studentId: "",
@@ -75,6 +83,10 @@ const studentSlice = createSlice({
       state.students = action.payload;
     });
     builder.addCase(removeStudent.fulfilled, (state) => {
+      state.status = "succeeded";
+    });
+    builder.addCase(fetchStudentCourses.fulfilled, (state, action) => {
+      state.courses = action.payload;
       state.status = "succeeded";
     });
   },

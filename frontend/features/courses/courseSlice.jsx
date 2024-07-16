@@ -5,11 +5,11 @@ export const getAllCourses = createAsyncThunk(
   "courses/getAllCourses",
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get(
-        "http://192.168.1.5:3000/api/v1/courses"
-      );
+      const response = await axios.get("http://localhost:3000/api/v1/courses");
       return response.data;
     } catch (error) {
+      console.log(error);
+
       return thunkAPI.rejectWithValue("something went wrong");
     }
   }
@@ -20,7 +20,7 @@ export const addCourse = createAsyncThunk(
   async ({ courseId, courseName }, thunkAPI) => {
     try {
       const response = await axios.post(
-        "http://192.168.1.5:3000/api/v1/courses",
+        "http://localhost:3000/api/v1/courses",
         {
           courseId,
           courseName,
@@ -38,10 +38,10 @@ export const addCourse = createAsyncThunk(
 
 export const removeCourse = createAsyncThunk(
   "courses/removeCourse",
-  async (courseId) => {
+  async (_id) => {
     try {
       const response = await axios.delete(
-        `http://192.168.1.5:3000/api/v1/courses/${courseId}`
+        `http://localhost:3000/api/v1/courses/${_id}`
       );
       return response;
     } catch (error) {
