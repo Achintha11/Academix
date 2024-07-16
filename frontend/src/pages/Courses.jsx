@@ -8,6 +8,8 @@ import {
 } from "../../features/courses/courseSlice";
 import UserCourseCard from "../components/UserCourseCard";
 import { useEffect } from "react";
+import { getEnrollmentRequests } from "../../features/enrollment/enrollmentSlice";
+import CourseDetailsModal from "../components/CourseDetailsModal";
 
 const Courses = () => {
   const { courseName, courseId, courses } = useSelector(
@@ -18,7 +20,8 @@ const Courses = () => {
 
   useEffect(() => {
     dispatch(getAllCourses());
-  }, [dispatch, courses]);
+    dispatch(getEnrollmentRequests());
+  }, [dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,6 +90,7 @@ const Courses = () => {
           })}
         </div>
       </div>
+      <CourseDetailsModal />
     </div>
   );
 };

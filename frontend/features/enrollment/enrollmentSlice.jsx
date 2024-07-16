@@ -6,7 +6,7 @@ export const getEnrollmentRequests = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get(
-        "http://192.168.1.5:3000/api/v1/enrollmentRequests"
+        "http://localhost:3000/api/v1/enrollmentRequests"
       );
       return response.data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const requestEnrollment = createAsyncThunk(
   async ({ student, course }) => {
     try {
       const response = await axios.post(
-        "http://192.168.1.5:3000/api/v1/enrollmentRequests",
+        "http://localhost:3000/api/v1/enrollmentRequests",
         { student, course }
       );
       return response.data;
@@ -35,7 +35,7 @@ export const updateEnrollmentRequest = createAsyncThunk(
   async ({ id, action }) => {
     try {
       const response = await axios.put(
-        `http://192.168.1.5:3000/api/v1/enrollmentRequests/${id}`,
+        `http://localhost:3000/api/v1/enrollmentRequests/${id}`,
         { status: action }
       );
       return response.data;

@@ -36,12 +36,12 @@ function Sidebar({ isOpen, setIsOpen }) {
       icon: <FaHome className="me-2" />,
     },
     {
-      to: "/dashboard/all-courses",
+      to: "/dashboard/my-courses",
       label: "My Courses",
       icon: <FaBook className="me-2" />,
     },
     {
-      to: "/dashboard/courses",
+      to: "/dashboard/all-courses",
       label: "All Courses",
       icon: <FaBook className="me-2" />,
     },

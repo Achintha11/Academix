@@ -16,7 +16,7 @@ export const checkAuth = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       console.log("check user started");
-      const response = await axios.get("http://192.168.1.5:3000/auth/check", {
+      const response = await axios.get("http://localhost:3000/auth/check", {
         withCredentials: true,
       });
       return response.data.user;
@@ -34,7 +34,7 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }) => {
     try {
       const response = await axios.post(
-        "http://192.168.1.5:3000/auth/login",
+        "http://localhost:3000/auth/login",
         { email, password },
         { withCredentials: true }
       );
@@ -49,7 +49,7 @@ export const logoutUser = createAsyncThunk(
   "auth/logoutUser ",
   async (_, thunkAPI) => {
     try {
-      await axios.get("http://192.168.1.5:3000/auth/logout", {
+      await axios.get("http://localhost:3000/auth/logout", {
         withCredentials: true,
       });
       return true;

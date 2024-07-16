@@ -14,7 +14,7 @@ const Requests = () => {
   return (
     <>
       {requests && (
-        <div className="container-fluid bg-white  p-3 h-90  ">
+        <div className="container-fluid bg-white  p-3 h-100  ">
           <div className="row ">
             <div className="col">
               <h2 className="text-muted">Requests</h2>

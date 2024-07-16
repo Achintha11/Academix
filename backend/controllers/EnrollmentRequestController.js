@@ -1,4 +1,5 @@
 const EnrollmentRequest = require("../models/EnrollmentRequest");
+const Student = require("../models/Student");
 
 const createEnrollmentRequest = async (req, res) => {
   const { student, course } = req.body;
@@ -37,10 +38,26 @@ const updateEnrollmentRequest = async (req, res) => {
       id,
       { status: status },
       { new: true }
-    );
+    )
+      .populate("student")
+      .populate("course");
 
     if (!updatedEnrollmentRequest) {
       return res.status(404).json({ message: "Enrollment request not found" });
+    }
+
+    // If the enrollment request is approved, update the student's enrolled courses
+    if (status === "approved") {
+      const student = await Student.findById(
+        updatedEnrollmentRequest.student._id
+      );
+
+      if (
+        !student.enrolledCourses.includes(updatedEnrollmentRequest.course._id)
+      ) {
+        student.enrolledCourses.push(updatedEnrollmentRequest.course._id);
+        await student.save();
+      }
     }
 
     res.status(200).json(updatedEnrollmentRequest);
