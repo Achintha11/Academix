@@ -6,6 +6,7 @@ import announcementReducer from "../features/announcement/announcementSlice";
 import authReducer from "../features/auth/authSlice";
 import enrollmentReducer from "../features/enrollment/enrollmentSlice";
 import modalReducer from "../features/courseDetailsModal/modalSlice";
+import assignmentReducer from "../features/assignment/assignmentSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     auth: authReducer,
     enrollments: enrollmentReducer,
     modal: modalReducer,
+    assignments: assignmentReducer,
   },
 });
 

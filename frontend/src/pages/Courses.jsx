@@ -86,11 +86,10 @@ const Courses = () => {
         <div className="col">
           {courses.map((course) => {
             const { courseId } = course;
-            return <UserCourseCard key={courseId} {...course} />;
+            return <UserCourseCard key={courseId} course={course} />;
           })}
         </div>
       </div>
-      <CourseDetailsModal />
     </div>
   );
 };
