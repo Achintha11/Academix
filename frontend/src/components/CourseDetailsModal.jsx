@@ -17,6 +17,7 @@ const CourseDetailsModal = () => {
   const dispatch = useDispatch();
   const modalOpen = useSelector(selectModal);
   const { selectedCourse } = useSelector((store) => store.assignments);
+  const { user } = useSelector((store) => store.auth);
 
   useEffect(() => {
     if (selectedCourse) {
@@ -67,7 +68,9 @@ const CourseDetailsModal = () => {
               </div>
               <div className="row">
                 <div className="col">
-                  {selectedCourse && <AddAssignmentForm />}
+                  {selectedCourse && user.role !== "student" && (
+                    <AddAssignmentForm />
+                  )}
                 </div>
               </div>
               <div className="row">

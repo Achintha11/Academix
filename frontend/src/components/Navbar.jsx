@@ -7,7 +7,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg bg-primary-gradient navbar-dark text-white">
       <div className="container">
         <NavLink className="navbar-brand font-weight-bold" exact to="/">
-          <h1 className="font-weight-bold">
+          <h1 style={{ letterSpacing: "3px" }} className="font-weight-bold">
             Academi<span className="text-orange">X</span>
           </h1>
         </NavLink>
@@ -64,10 +64,7 @@ const Navbar = () => {
           </ul>
 
           <NavLink to="/signIn">
-            <button
-              className="btn btn-primary ml-auto btn-sm custom-nav-btn"
-              type="button"
-            >
+            <button className="  ml-auto btn-sm custom-nav-btn" type="button">
               Sign in
             </button>
           </NavLink>

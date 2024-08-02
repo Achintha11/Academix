@@ -91,14 +91,17 @@ const DashboardLayout = () => {
     <>
       {user && (
         <div
-          className={`dashboard-layout d-flex vh-100 ${
+          className={`dashboard-layout d-flex  ${
             isOpen ? "sidebar-open" : "sidebar-closed "
           }`}
         >
           <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
           <div className="d-flex flex-column flex-grow-1 border">
             <Header toggleSidebar={toggleSidebar} />
-            <div className="main-content flex-grow-1 p-3 border bg-gray">
+            <div
+              style={{ height: "90vh" }}
+              className="main-content flex-grow-1 p-3 border bg-gray overflow-auto no-scrollbar "
+            >
               <Routes>{renderRoutes()}</Routes>
             </div>
           </div>
