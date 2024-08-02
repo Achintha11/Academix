@@ -36,3 +36,7 @@ mongoose.connect(process.env.db_uri).then(() => {
     console.log(`Server is running on port ${port}`);
   });
 });
+
+app.get("/", (req, res) => {
+  res.send("Successfully Deployed");
+});
