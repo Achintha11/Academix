@@ -11,6 +11,7 @@ const requireAuth = (req, res, next) => {
     jwt.verify(token, process.env.token_secret, (err, decodedToken) => {
       if (err) {
         console.log(err.message);
+        console.log("Token verification error: ", err.message);
         res.status(401).json({ message: "Unauthorized" });
       } else {
         req.user = decodedToken;
