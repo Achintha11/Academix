@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173", // Adjust to your frontend URL during development
+    origin: "https://academix-two.vercel.app", // Adjust to your frontend URL during development
     credentials: true, // Enable credentials (cookies, authorization headers)
   })
 );

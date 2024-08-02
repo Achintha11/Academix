@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const getAssignments = createAsyncThunk(
   "assignments/getAssignments",
   async (courseId) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/assignments/${courseId}`
+        `${BASE_URL}/api/v1/assignments/${courseId}`
       );
       console.log("Assignments fetched:", response.data);
 
@@ -26,10 +27,12 @@ export const addNewAssignment = createAsyncThunk(
     courseId,
   }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/assignments",
-        { assignmentTitle, assignmentDescription, assignmentDueDate, courseId }
-      );
+      const response = await axios.post(`${BASE_URL}/api/v1/assignments`, {
+        assignmentTitle,
+        assignmentDescription,
+        assignmentDueDate,
+        courseId,
+      });
       return response.data;
     } catch (error) {
       console.log(error);

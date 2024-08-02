@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const fetchTeachers = createAsyncThunk(
   "teachers/fetchTeachers",
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get("http://localhost:3000/api/v1/teachers");
+      const response = await axios.get(`${BASE_URL}/api/v1/teachers`);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue("something went wrong");
@@ -17,14 +18,11 @@ export const addTeacher = createAsyncThunk(
   "teachers/addTeacher",
   async ({ email, name, teacherId }, thunkAPI) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/teachers",
-        {
-          email,
-          name,
-          teacherId,
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/api/v1/teachers`, {
+        email,
+        name,
+        teacherId,
+      });
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue("something went wrong");
@@ -36,7 +34,7 @@ export const removeTeacher = createAsyncThunk(
   "teachers/removeTeacher",
   async (teacherId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/v1/teachers/${teacherId}`);
+      await axios.delete(`${BASE_URL}/api/v1/teachers/${teacherId}`);
       return teacherId;
     } catch (error) {
       console.log(error);
