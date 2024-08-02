@@ -20,14 +20,14 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
 
-  // useEffect(() => {
-  //   dispatch(checkAuth())
-  //     .unwrap()
-  //     .catch((err) => {
-  //       console.log(err);
-  //       navigate("/signIn");
-  //     });
-  // }, [dispatch, navigate]);
+  useEffect(() => {
+    dispatch(checkAuth())
+      .unwrap()
+      .catch((err) => {
+        console.log(err);
+        navigate("/signIn");
+      });
+  }, [dispatch, navigate]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
