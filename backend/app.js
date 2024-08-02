@@ -38,5 +38,5 @@ mongoose.connect(process.env.db_uri).then(() => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("Successfully Deployed");
 });
