@@ -31,7 +31,7 @@ const login_post = async (req, res) => {
       res.cookie("jwt", token, {
         httpOnly: true,
         secure: true,
-        sameSite: "Lax",
+        sameSite: "None",
         maxAge: maxAge * 1000, // 3 days
         path: "/", // Ensure the path is correct
       });
