@@ -111,8 +111,6 @@ const authSlice = createSlice({
       .addCase(checkAuth.rejected, (state, action) => {
         state.error = action.payload;
         state.loading = false;
-        const navigate = useNavigate();
-        navigate("/signIn");
       });
     builder.addCase(logoutUser.fulfilled, (state) => {
       state.user = null;
