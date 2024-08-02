@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const getAllCourses = createAsyncThunk(
   "courses/getAllCourses",
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get("http://localhost:3000/api/v1/courses");
+      const response = await axios.get(`${BASE_URL}/api/v1/courses`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -19,13 +20,10 @@ export const addCourse = createAsyncThunk(
   "courses/addCourse",
   async ({ courseId, courseName }, thunkAPI) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/courses",
-        {
-          courseId,
-          courseName,
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/api/v1/courses`, {
+        courseId,
+        courseName,
+      });
       thunkAPI.dispatch(setCourseId(""));
       thunkAPI.dispatch(setCourseName(""));
 
@@ -40,9 +38,7 @@ export const removeCourse = createAsyncThunk(
   "courses/removeCourse",
   async (_id) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/v1/courses/${_id}`
-      );
+      const response = await axios.delete(`${BASE_URL}/api/v1/courses/${_id}`);
       return response;
     } catch (error) {
       console.log(error);

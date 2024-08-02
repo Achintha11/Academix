@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const initialState = {
   announcements: [],
@@ -12,15 +13,12 @@ export const getAllAnnouncements = createAsyncThunk(
   async (_, thunkAPI) => {
     const role = thunkAPI.getState().auth.user.role;
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/v1/announcements",
-        {
-          headers: {
-            Role: role,
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`${BASE_URL}/api/v1/announcements`, {
+        headers: {
+          Role: role,
+        },
+        withCredentials: true,
+      });
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue("something went wrong");
@@ -33,7 +31,7 @@ export const addAnnouncement = createAsyncThunk(
   async (announcement, thunkAPI) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/announcements",
+        `${BASE_URL}/api/v1/announcements`,
         announcement
       );
       thunkAPI.dispatch(setShowAlert(true));
@@ -49,7 +47,7 @@ export const deleteAnnouncement = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/v1/announcements/${id}`
+        `${BASE_URL}/api/v1/announcements/${id}`
       );
       return response.data;
     } catch (error) {
