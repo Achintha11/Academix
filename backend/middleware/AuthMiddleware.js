@@ -8,7 +8,7 @@ const requireAuth = (req, res, next) => {
 
   // Check if JWT exists and is verified
   if (token) {
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, decodedToken) => {
+    jwt.verify(token, process.env.token_secret, (err, decodedToken) => {
       if (err) {
         console.log(err.message);
         res.status(401).json({ message: "Unauthorized" });
