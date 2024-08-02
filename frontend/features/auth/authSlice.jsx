@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const initialState = {
   user: null,
@@ -16,7 +17,7 @@ export const checkAuth = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       console.log("check user started");
-      const response = await axios.get("http://localhost:3000/auth/check", {
+      const response = await axios.get(`${BASE_URL}/auth/check`, {
         withCredentials: true,
       });
       return response.data.user;
@@ -34,7 +35,7 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/login",
+        `${BASE_URL}/auth/login`,
         { email, password },
         { withCredentials: true }
       );
@@ -49,7 +50,7 @@ export const logoutUser = createAsyncThunk(
   "auth/logoutUser ",
   async (_, thunkAPI) => {
     try {
-      await axios.get("http://localhost:3000/auth/logout", {
+      await axios.get(`${BASE_URL}/auth/logout`, {
         withCredentials: true,
       });
       return true;

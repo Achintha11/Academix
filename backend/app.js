@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173", // Adjust to your frontend URL during development
+    origin: "https://academix-two.vercel.app", // Adjust to your frontend URL during development
     credentials: true, // Enable credentials (cookies, authorization headers)
   })
 );
@@ -29,10 +29,14 @@ app.use("/api/v1", announcementRoute);
 app.use("/api/v1", enrollmentRequestRoute);
 app.use("/api/v1", assignmentRoute);
 
-const port = 3000;
+const port = 8080;
 mongoose.connect(process.env.db_uri).then(() => {
   console.log("connected to DB");
   app.listen(port, "0.0.0.0", () => {
     console.log(`Server is running on port ${port}`);
   });
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello World");
 });

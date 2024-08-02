@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const fetchStudents = createAsyncThunk(
   "students/fetchStudents",
   async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/v1/students");
+      const response = await axios.get(`${BASE_URL}/api/v1/students`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -17,14 +18,11 @@ export const addStudent = createAsyncThunk(
   "students/addStudent",
   async ({ name, studentId, email }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/students",
-        {
-          name,
-          studentId,
-          email,
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/api/v1/students`, {
+        name,
+        studentId,
+        email,
+      });
       return response.data;
     } catch (error) {
       console.log(error);
@@ -37,7 +35,7 @@ export const removeStudent = createAsyncThunk(
   async (studentId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/v1/students/${studentId}`
+        `${BASE_URL}/api/v1/students/${studentId}`
       );
       return response;
     } catch (error) {
@@ -49,7 +47,7 @@ export const fetchStudentCourses = createAsyncThunk(
   "studentCourses/fetchStudentCourses",
   async (studentId) => {
     const response = await axios.get(
-      `http://localhost:3000/api/v1/students/${studentId}/courses`
+      `${BASE_URL}/api/v1/students/${studentId}/courses`
     );
     return response.data;
   }
