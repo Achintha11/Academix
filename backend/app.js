@@ -29,7 +29,7 @@ app.use("/api/v1", announcementRoute);
 app.use("/api/v1", enrollmentRequestRoute);
 app.use("/api/v1", assignmentRoute);
 
-const port = 3000;
+const port = 8080;
 mongoose.connect(process.env.db_uri).then(() => {
   console.log("connected to DB");
   app.listen(port, "0.0.0.0", () => {
