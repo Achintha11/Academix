@@ -2,7 +2,7 @@
 import React from "react";
 
 const AboutPage = () => {
-  return <div>AboutPage</div>;
+  return <div className="vh-100">AboutPage</div>;
 };
 
 export default AboutPage;

@@ -119,7 +119,7 @@ function Sidebar({ isOpen, setIsOpen }) {
 
   return (
     <div
-      className={`sidebar d-flex flex-column vh-100 p-3 bg-white ${
+      className={`sidebar d-flex flex-column  p-3 bg-white ${
         isOpen ? "open" : "closed"
       }`}
     >

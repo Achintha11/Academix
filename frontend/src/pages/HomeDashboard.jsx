@@ -1,5 +1,18 @@
+import React from "react";
 import { FaUsers, FaChalkboardTeacher, FaBook } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  Line,
+  Area,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
 import { addAnnouncement } from "../../features/announcement/announcementSlice";
 import CustomAlert from "../components/CustomAlert";
 
@@ -22,8 +35,47 @@ const HomeDashboard = () => {
     e.target.reset();
   };
 
+  const data = [
+    {
+      name: "Page A",
+      uv: 590,
+      pv: 800,
+      amt: 1400,
+    },
+    {
+      name: "Page B",
+      uv: 868,
+      pv: 967,
+      amt: 1506,
+    },
+    {
+      name: "Page C",
+      uv: 1397,
+      pv: 1098,
+      amt: 989,
+    },
+    {
+      name: "Page D",
+      uv: 1480,
+      pv: 1200,
+      amt: 1228,
+    },
+    {
+      name: "Page E",
+      uv: 1520,
+      pv: 1108,
+      amt: 1100,
+    },
+    {
+      name: "Page F",
+      uv: 1400,
+      pv: 680,
+      amt: 1700,
+    },
+  ];
+
   return (
-    <div className="container-fluid">
+    <div className="container-fluid  overflow-auto ">
       <CustomAlert
         message={"Announcement sent successfully!"}
         type={"success"}
@@ -72,7 +124,43 @@ const HomeDashboard = () => {
       <div className="row mt-3">
         <div className="col-md-5 bg-white mr-3 shadow p-3">
           <h4 className="mb-1 text-muted">Dashboard Analytics</h4>
-          <p>Additional analytics and features can be placed here.</p>
+          <div
+            className="border mt-5"
+            style={{
+              width: "100%",
+              height: 300,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <ResponsiveContainer>
+              <ComposedChart
+                width={500}
+                height={400}
+                data={data}
+                margin={{
+                  top: 20,
+                  right: 20,
+                  bottom: 20,
+                  left: 20,
+                }}
+              >
+                <CartesianGrid stroke="#f5f5f5" />
+                <XAxis dataKey="name" scale="band" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Area
+                  type="monotone"
+                  dataKey="amt"
+                  fill="#8884d8"
+                  stroke="#8884d8"
+                />
+                <Bar dataKey="pv" barSize={20} fill="#413ea0" />
+                <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
         </div>
 
         {user.role !== "student" && (

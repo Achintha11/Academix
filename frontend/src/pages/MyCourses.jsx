@@ -39,8 +39,6 @@ const MyCourses = () => {
           </div>
         )}
       </div>
-
-      <CourseDetailsModal />
     </>
   );
 };
