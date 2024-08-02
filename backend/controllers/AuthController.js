@@ -30,8 +30,10 @@ const login_post = async (req, res) => {
       const token = createToken(user._id);
       res.cookie("jwt", token, {
         httpOnly: true,
-        maxAge: maxAge * 1000,
+        secure: true,
         sameSite: "strict",
+        maxAge: maxAge * 1000, // 3 days
+        path: "/", // Ensure the path is correct
       });
       res.status(200).json({ user: { id: user._id, email: user.email } });
       console.log("user logged");
